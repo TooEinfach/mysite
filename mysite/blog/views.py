@@ -35,14 +35,14 @@ def post_detail(request, year, month, day, post):
             new_comment.post = post
             # save the comment to the database
             new_comment.save()
-        else:
-            comment_form = CommentForm()
+    else:
+        comment_form = CommentForm()
 
     return render(request, 'blog/post/detail.html', 
-                            {'post': post},
-                            {'comments': comments},
-                            {'new_comment': new_comment},
-                            {'comment_form': comment_form})
+                            {'post': post,
+                            'comments': comments,
+                            'new_comment': new_comment,
+                            'comment_form': comment_form})
 
 class PostListView(ListView):
     queryset = Post.published.all()
