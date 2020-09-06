@@ -23,7 +23,7 @@ def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post, status='published', publish__year=year, 
                                     publish__month=month, publish__day=day)
     # List of active comments for this post
-    commnets = post.comments.filter(active=True)
+    comments = post.comments.filter(active=True)
     new_comment = None
     if request.method == 'POST':
         # A comment was posted
@@ -38,7 +38,11 @@ def post_detail(request, year, month, day, post):
         else:
             comment_form = CommentForm()
 
-    return render(request, 'blog/post/detail.html', {'post': post}, {'comments':commnets}, {'new_comment':new_comment}, {'comment_form': comment_form})
+    return render(request, 'blog/post/detail.html', 
+                            {'post': post},
+                            {'comments': comments},
+                            {'new_comment': new_comment},
+                            {'comment_form': comment_form})
 
 class PostListView(ListView):
     queryset = Post.published.all()
